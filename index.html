@@ -29,12 +29,6 @@
     - Visual: Red Alert background strobe.
     - Security: 60s cooldown is time-stamped. refreshing the page will NOT skip it.
 
-[5] SECURITY OVERRIDES (Press 'C' to Enter):
-    - "israel": +10k Credits, +100k Alloy, Rapid Rank scaling to Lv 100.
-               Syncs Army/Skill to Rank. 15-minute expiration timer.
-    - "iran":   INSTANT REVERT. Restores game to pre-Israel snapshot.
-    - "treaty": Security reset. Required if console locks due to "double-dipping."
-
 [6] MILESTONES:
     - Every 15 Levels: Automatic Loyalty Commission of +15 Mercenaries.
 
@@ -50,6 +44,33 @@
 <head>
     <meta charset="UTF-8">
     <title>Dominion: Infinite Frontiers - Master Build</title>
+
+<script>
+  // Disable right-click context menu
+  document.addEventListener('contextmenu', event => event.preventDefault());
+
+  // Disable specific keyboard shortcuts
+  document.onkeydown = function(e) {
+    // Disable F12
+    if (event.keyCode == 123) {
+      return false;
+    }
+    // Disable Ctrl+Shift+I (Inspect)
+    if (e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) {
+      return false;
+    }
+    // Disable Ctrl+Shift+J (Console)
+    if (e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) {
+      return false;
+    }
+    // Disable Ctrl+U (View Source)
+    if (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) {
+      return false;
+    }
+  };
+</script>
+
+    
     <style>
         body { background: #1a1a2e; color: #e9e9e9; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; display: flex; justify-content: center; padding: 20px; padding-bottom: 100px; overflow-x: hidden; transition: background 0.3s; }
         #game-container { background: #16213e; border: 2px solid #4ecca3; border-radius: 10px; width: 620px; padding: 20px; box-shadow: 0 0 20px rgba(0,0,0,0.5); position: relative; z-index: 2; }
