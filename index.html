@@ -75,7 +75,7 @@
         logBox.scrollTop = logBox.scrollHeight;
     }
 
-    // Page 6 & 11: Battle Logic
+        // Page 6 & 11: Battle Logic (Randomized Outcomes)
     function battle() {
         if(state.army <= 0) return log("No soldiers left!");
         if(state.food <= 0) return log("Army too hungry to fight! Buy Food Stamps.");
@@ -85,20 +85,31 @@
         let enemy = (10 + (state.level * 15)) * (Math.random() + 0.5);
 
         log(`Deploying to <span class="terrain-tag">${terrain.name}</span>...`);
-        state.food -= 2; // Upkeep Pressure (p. 23)
+        state.food -= 2; 
 
         if(power > enemy) {
-            let winRes = 30 + (state.level * 5);
-            let winXP = 20;
-            let winAlloy = 5;
+            // RANDOMIZED WIN REWARDS
+            let winRes = Math.floor(Math.random() * (40 - 20 + 1)) + 20 + (state.level * 5); // 20-40 + level bonus
+            let winXP = Math.floor(Math.random() * (25 - 15 + 1)) + 15; // 15-25 XP
+            let winAlloy = Math.floor(Math.random() * 8) + 2; // 2-10 Alloy
+            
             state.res += winRes;
             state.xp += winXP;
             state.alloy += winAlloy;
-            log(`VICTORY! Gained ${winRes} Credits and ${winAlloy} Alloy.`);
+            
+            log(`VICTORY! Recovered ${winRes} Credits and ${winAlloy} Alloy.`);
             checkLevelUp();
         } else {
-            state.army--;
-            log("DEFEAT! A soldier was lost in the field.");
+            // RANDOMIZED LOSS PENALTIES
+            let armyLost = Math.random() > 0.8 ? 2 : 1; // 20% chance to lose 2 soldiers instead of 1
+            let alloyLost = Math.floor(Math.random() * 4); // Chance to lose 0-3 Alloy in the chaos
+            
+            state.army = Math.max(0, state.army - armyLost);
+            state.alloy = Math.max(0, state.alloy - alloyLost);
+            
+            let lossMsg = `DEFEAT! Lost ${armyLost} soldier(s)`;
+            if(alloyLost > 0) lossMsg += ` and ${alloyLost} Alloy during the retreat.`;
+            log(lossMsg);
         }
         updateUI();
     }
